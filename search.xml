@@ -4,6 +4,12 @@
   
     
     <entry>
+      <title><![CDATA[about]]></title>
+      <url>http://hu820.github.io/2016/06/13/about/</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[CSRF/XSS/SQL注入]]></title>
       <url>http://hu820.github.io/2016/06/13/CSRF-XSS-SQL%E6%B3%A8%E5%85%A5/</url>
       <content type="html"><![CDATA[<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><blockquote>
