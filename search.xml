@@ -5,7 +5,7 @@
     
     <entry>
       <title><![CDATA[CSRF/XSS/SQL注入]]></title>
-      <url>http://yoursite.com/2016/06/13/CSRF-XSS-SQL%E6%B3%A8%E5%85%A5/</url>
+      <url>http://hu820.github.io/2016/06/13/CSRF-XSS-SQL%E6%B3%A8%E5%85%A5/</url>
       <content type="html"><![CDATA[<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><blockquote>
 <p><strong>跨站请求伪造</strong>（英语：Cross-site request forgery），也被称为 <strong>one-click attack</strong> 或者 <strong>session riding</strong>，通常缩写为 <strong>CSRF</strong> 或者 <strong>XSRF</strong>， 是一种挟制用户在当前已登录的Web应用程序上执行非本意的操作的攻击方法。</p>
 </blockquote>
@@ -41,7 +41,7 @@
     
     <entry>
       <title><![CDATA[用markdown写作]]></title>
-      <url>http://yoursite.com/2016/06/12/%E7%94%A8markdown%E5%86%99%E4%BD%9C/</url>
+      <url>http://hu820.github.io/2016/06/12/%E7%94%A8markdown%E5%86%99%E4%BD%9C/</url>
       <content type="html"><![CDATA[<p>作者：<strong>arihu</strong></p>
 <h2 id="1-赶快用markdown写作？"><a href="#1-赶快用markdown写作？" class="headerlink" title="1 赶快用markdown写作？"></a>1 赶快用markdown写作？</h2><ul>
 <li><p>markdown的优点如下：</p>
