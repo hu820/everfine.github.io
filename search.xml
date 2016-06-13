@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+    
+    <entry>
+      <title><![CDATA[CSRF/XSS/SQL注入]]></title>
+      <url>http://yoursite.com/2016/06/13/CSRF-XSS-SQL%E6%B3%A8%E5%85%A5/</url>
+      <content type="html"><![CDATA[<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><blockquote>
+<p><strong>跨站请求伪造</strong>（英语：Cross-site request forgery），也被称为 <strong>one-click attack</strong> 或者 <strong>session riding</strong>，通常缩写为 <strong>CSRF</strong> 或者 <strong>XSRF</strong>， 是一种挟制用户在当前已登录的Web应用程序上执行非本意的操作的攻击方法。</p>
+</blockquote>
+<p>举个栗子：</p>
+<blockquote>
+<p>宅男用户x在某银行网站b.com上正准备付款，突然QQ上弹出消息，说你中奖苹果电脑一台了，点击进去一看，何种输入验证码，准备收货。开心回到银行继续付款，却被提示余额不足，宅男摸摸头，难道我记错了……</p>
+</blockquote>
+<p>点评：<strong>不能怪咱们的用户，只能说骗子手法很隐蔽</strong> </p>
+<p><em>咱们来看看上面过程中，骗子是怎么完成一次攻击的</em></p>
+<ul>
+<li><strong>技术分析</strong></li>
+</ul>
+<p>当用户x点击QQ消息中的链接跳转到网站a.com时，黑客会在网站a.com向用于原网站b.com发送一个请求，由于用户已经在银行网站b.com登录，根据浏览器同源法则，浏览器会自动带上用户在b.com域名下的cookie。由于服务端鉴权是通过cookie鉴定的，所以，如果服务端没有校验本次请求的合法性，通过了该伪造请求的操作。可以是发表一篇日子，说说（借钱），甚至是发起一笔转账….，后果可想而知。</p>
+<p>具体实现更是层出不穷，防不慎防，比如：在黑客网站放置一张看不见的图片</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=http:<span class="comment">//www.b.com/Transfer.php?toUserId=c&amp;money=1000000&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样，用户点击后会构造了一个GET请求。</p>
+<p>POST请求稍微麻烦一点，但是同样可以实现，构造一个form submit即可。</p>
+<ul>
+<li><strong>CSRF的防御之道</strong></li>
+</ul>
+<p>目前业界对CSRF的防御主要有三种：</p>
+<ol>
+<li>验证HTTP Referer字段</li>
+<li>在请求中添加token字段，后台服务端验证token是否合法</li>
+</ol>
+<h5 id="验证HTTP-Referer字段"><a href="#验证HTTP-Referer字段" class="headerlink" title="验证HTTP Referer字段"></a>验证HTTP Referer字段</h5><p>这应该是咱们的第一反应，既然来源不合法，那咱们校验下来源就行了。事实也确实是如此，伪造请求的http头部referer字段确实不是咱们自己的站点，而是伪造网站自己的，如上面假设的a.com。这种办法的优点是简单易行，工作量很低，但是这种方法也有其局限性，因为完全依赖浏览器发送正确的referer字段，无法保证浏览器的具体实现，也没办法确认是否有漏洞可以恶意伪造。</p>
+<h5 id="添加token校验"><a href="#添加token校验" class="headerlink" title="添加token校验"></a>添加token校验</h5><p>由于CSRF的本质在于欺骗用户去访问自己设置的地址，所以如果要求在访问敏感数据请求时，要求用户浏览器提供不保存在cookie中，并且攻击者无法伪造的数据作为校验，那么攻击者就无法再执行CSRF攻击。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">token = MD5(UID*SALT)</span><br></pre></td></tr></table></figure>
+<p>服务端拿到token之后，用相同的算法对UID进行运算后得到服务端的token，与客户端的token进行比较，不相等即可以判断为非法。</p>
+<p>这个算法的实质在于利用了浏览器的同源策略，b.com下的cookie在a.com下是无法拿到的，因此黑客也就无法伪造出正确的token。加上MD5和SALT的主要目的是为了增加破解成本。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[用markdown写作]]></title>
+      <url>http://yoursite.com/2016/06/12/%E7%94%A8markdown%E5%86%99%E4%BD%9C/</url>
+      <content type="html"><![CDATA[<p>作者：<strong>arihu</strong></p>
+<h2 id="1-赶快用markdown写作？"><a href="#1-赶快用markdown写作？" class="headerlink" title="1 赶快用markdown写作？"></a>1 赶快用markdown写作？</h2><ul>
+<li><p>markdown的优点如下：</p>
+<ul>
+<li>纯文本，兼容性极强，几乎可以用任何文本编辑器打开</li>
+<li>让你专注文字，而不是拍版</li>
+<li>格式转换方便，Markdown的文本可以轻松转换为html，电子书，pdf等各式</li>
+<li>Markdown的标记语法可读性很好</li>
+</ul>
+<p>本文全部由markdown编辑而成，我们推崇markdown，必定会通过本文，让你大概了解markdown，学会使用markdown。</p>
+</li>
+</ul>
+<h2 id="2-那些人要用markdown写作？"><a href="#2-那些人要用markdown写作？" class="headerlink" title="2 .那些人要用markdown写作？"></a>2 .那些人要用markdown写作？</h2><p>markdown是为那些经常需要码字或者进行文字排版的人群设计的，他们希望用键盘啪啪啪地打出来后就已经排好版了，最好从头到尾不需要用鼠标，这些人包括经常需要写文档的码农，博客写手，网战小编，出版社人士等。</p>
+<h2 id="3-markdown语法难吗？"><a href="#3-markdown语法难吗？" class="headerlink" title="3.markdown语法难吗？"></a>3.markdown语法难吗？</h2><p>markdown主要的语法全部由一些符号组成，这些符号经过了精挑细选，一目了然。比如：在文本的两旁加上星号，看起来就像强调。markdown的区块引用看起来就真的像是引用一段文字。这就是我使用markdown的理由和学习动力。</p>
+<h2 id="4-markdown实战"><a href="#4-markdown实战" class="headerlink" title="4.markdown实战"></a>4.markdown实战</h2><p>废话不多说，咱们开始学习markdown。</p>
+<p><em>welcome to markdown</em></p>
+<p><strong>标题</strong></p>
+<p>在行首插入 1 到 6 个 <code>#</code> ，对应到标题 1 到 6 阶，</p>
+<blockquote>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; # 这是大标题H1</span></span><br><span class="line"><span class="quote">&gt; ##这是二级标题H2</span></span><br><span class="line"><span class="quote">&gt; ....</span></span><br><span class="line"><span class="quote">&gt; ######这是H6</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; 这是大标题H1</span><br><span class="line">&gt; 这是二级标题H2</span><br><span class="line">&gt; .....</span><br><span class="line">&gt; 这是H6</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>区块引用</strong></p>
+<p>Markdown 标记区块引用是使用类似 email 中用 <code>&gt;</code> 的引用方式。在每行的最前面加上 <code>&gt;</code> 就真的看起来引用</p>
+<blockquote>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; &gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,</span></span><br><span class="line"><span class="quote">&gt; &gt; consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.</span></span><br><span class="line"><span class="quote">&gt; &gt; Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</span></span><br><span class="line"><span class="quote">&gt; &gt; </span></span><br><span class="line"><span class="quote">&gt; &gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse</span></span><br><span class="line"><span class="quote">&gt; &gt; id sem consectetuer libero luctus adipiscing.</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<blockquote>
+<p>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,<br>consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<br>Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
+<p>Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<br>id sem consectetuer libero luctus adipiscing.</p>
+</blockquote>
+</blockquote>
+<p>上面如果你偷懒在每一个段落的第一行加上>也是可以的</p>
+<p>在引用的区块内也是可以使用markdown语法的哦，包括标题，列表，代码等</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;##这是一个标题</span><br><span class="line"><span class="quote">&gt;</span><br><span class="line">&gt;* 这是第一行列表项</span></span><br><span class="line">&gt;* 这是第二行列表项</span><br><span class="line"><span class="quote">&gt;</span><br><span class="line">&gt;下面是程序员们的最爱的代码哦</span></span><br><span class="line"><span class="quote">&gt;</span><br><span class="line">&gt; return shell_exec("echo $input | $markdown_script");</span></span><br></pre></td></tr></table></figure>
+<hr>
+<blockquote>
+<h2 id="这是一个标题"><a href="#这是一个标题" class="headerlink" title="这是一个标题"></a>这是一个标题</h2><ul>
+<li>这是第一行列表项</li>
+<li>这是第二行列表项</li>
+</ul>
+<p>下面是程序员们的最爱的代码哦</p>
+<p>return shell_exec(“echo $input | $markdown_script”);</p>
+</blockquote>
+<p><strong>列表</strong></p>
+<p>Markdown 支持有序列表和无序列表。</p>
+<p>无序列表使用星号、加号或是减号作为列表标记：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>red</span><br><span class="line"><span class="bullet">* </span>green</span><br><span class="line"><span class="bullet">* </span>blue</span><br></pre></td></tr></table></figure>
+<p>记得* 后面留个空格哦</p>
+<p>上面的语法也和下面的等价</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">+ </span>red</span><br><span class="line"><span class="bullet">+ </span>green</span><br><span class="line"><span class="bullet">+ </span>blue</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">- </span>red</span><br><span class="line"><span class="bullet">- </span>green</span><br><span class="line"><span class="bullet">- </span>blue</span><br></pre></td></tr></table></figure>
+<hr>
+<p>结果都是下面介样子</p>
+<ul>
+<li>red</li>
+<li>green</li>
+<li>blue</li>
+</ul>
+<p>有序列表则使用数字接着一个英文句点：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1. </span>tencent</span><br><span class="line"><span class="bullet">2. </span>baidu</span><br><span class="line"><span class="bullet">3. </span>alibaba</span><br></pre></td></tr></table></figure>
+<hr>
+<ol>
+<li><p>tencent</p>
+</li>
+<li><p>baidu</p>
+</li>
+<li><p>alibaba</p>
+<p>​</p>
+<p>​</p>
+</li>
+</ol>
+<p><strong>一个综合例子</strong></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; **Note:**</span></span><br><span class="line"></span><br><span class="line"><span class="quote">&gt; - Full access to **Google Drive** or **Dropbox** is required to be able to import any document in StackEdit. Permission restrictions can be configured in the settings.</span></span><br><span class="line"><span class="quote">&gt; - Imported documents are downloaded in your browser and are not transmitted to a server.</span></span><br><span class="line"><span class="quote">&gt; - If you experience problems saving your documents on Google Drive, check and optionally disable browser extensions, such as Disconnect.</span></span><br></pre></td></tr></table></figure>
+<hr>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>Full access to <strong>Google Drive</strong> or <strong>Dropbox</strong> is required to be able to import any document in StackEdit. Permission restrictions can be configured in the settings. </li>
+<li>Imported documents are downloaded in your browser and are not transmitted to a server.</li>
+<li>If you experience problems saving your documents on Google Drive, check and optionally disable browser extensions, such as Disconnect.</li>
+</ul>
+</blockquote>
+<p><strong>代码区块</strong></p>
+<p>程序员哥哥最喜欢的就是在markdown下面写作，记录代码片段，markdown的处理很简单。<em>只要简单地缩进 4 个空格或是 1 个制表符就可以</em></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">我的代码在下面</span><br><span class="line"><span class="code">	这是一段代码哈，你会怎么显示呢？</span></span><br><span class="line"><span class="code">	public function is_you($id)&#123;</span></span><br><span class="line"><span class="code">		return $id==10086?true:false;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="code">	&lt;p&gt;这是一段html&lt;/p&gt;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>在代码区块里面， <code>&amp;</code> 、 <code>&lt;</code> 和 <code>&gt;</code> 会自动转成 HTML 实体，这样的方式让你非常容易使用 Markdown 插入范例用的 HTML 原始码，只需要复制贴上，再加上缩进就可以了，剩下的 Markdown 都会帮你处理</p>
+<p><strong>分割线</strong></p>
+<p>三个或者三个以上的星星，减号，底线就建立了一个分割线</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="emphasis">***</span></span><br><span class="line"><span class="section">*****</span><br><span class="line">----</span></span><br><span class="line"><span class="strong">_____</span>_</span><br></pre></td></tr></table></figure>
+<p><strong>链接</strong></p>
+<p>在 Markdown 中，插入链接不需要其他按钮，你只需要使用 <code>[显示文本](链接地址)</code> 这样的语法即可，例如：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">百度</span>](<span class="link">https://baidu.com</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<p><a href="https://baidu.com" target="_blank" rel="external">百度</a></p>
+<p>图片的使用和链接很像，在前面加个！就好了</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![](http://a.hiphotos.baidu.com/image/h%3D200/sign=ff2f518d9c504fc2bd5fb705d5dce7f0/7e3e6709c93d70cfebc67788ffdcd100baa12b73.jpg)</span><br></pre></td></tr></table></figure>
+<p><img src="http://a.hiphotos.baidu.com/image/h%3D200/sign=ff2f518d9c504fc2bd5fb705d5dce7f0/7e3e6709c93d70cfebc67788ffdcd100baa12b73.jpg" alt=""></p>
+<p><strong>强调</strong></p>
+<p>Markdown 使用星号（<code>*</code>）和底线（<code>_</code>）作为标记强调字词的符号，被 <code>*</code> 或 <code>_</code> 包围的字词会被转成用 <code>标签包围，用两个 `*` 或`_` 包起来的话，则会被转成</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">*single asterisks*</span><br><span class="line"></span><br><span class="line">_single underscores_</span><br><span class="line"></span><br><span class="line">**double asterisks**</span><br><span class="line"></span><br><span class="line">__double underscores__</span><br></pre></td></tr></table></figure>
+<hr>
+<p><em>single asterisks</em></p>
+<p>single underscores</p>
+<p><em><strong>double asterisks</strong></em></p>
+<p><em>double underscores</em></p>
+<p><em>代码</em></p>
+<p>如果要标记一小段行内代码，你可以用反引号把它包起来（<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>Use the <code>printf()</code> function.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Use the `printf()` function.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*表格*</span><br><span class="line"></span><br><span class="line">表格的语法更简单，直接用|表示就好了</span><br><span class="line"></span><br><span class="line">```markdown</span><br><span class="line">|Item|value|</span><br><span class="line">-----|----</span><br><span class="line">china|$190000000</span><br><span class="line">usa|$2800000</span><br><span class="line">spain|$8900</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>china</td>
+<td>$190000000</td>
+</tr>
+<tr>
+<td>usa</td>
+<td>$2800000</td>
+</tr>
+<tr>
+<td>spain</td>
+<td>$8900</td>
+</tr>
+</tbody>
+</table>
+<p>如果你想指定对其方式，你可以这样做</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">| Item     | Value | Qty   |</span><br><span class="line">| :------- | ----: | :---: |</span><br><span class="line">| Computer | $1600 |  5    |</span><br><span class="line">| Phone    | $12   |  12   |</span><br><span class="line">| Pipe     | $1    |  234  |</span><br></pre></td></tr></table></figure>
+<h2 id="markdown编辑器推荐"><a href="#markdown编辑器推荐" class="headerlink" title="markdown编辑器推荐"></a>markdown编辑器推荐</h2><ul>
+<li><p>在线：</p>
+<ul>
+<li><a href="https://stackedit.io/editor" target="_blank" rel="external">StackEdit</a></li>
+</ul>
+</li>
+<li><p>离线</p>
+<ul>
+<li><p><a href="https://www.typora.io/" target="_blank" rel="external">typroa</a></p>
+<p>​</p>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    </entry>
+    
+  
+  
+</search>
