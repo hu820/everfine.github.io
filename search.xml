@@ -13,7 +13,7 @@
 <blockquote>
 <p>宅男用户x在某银行网站b.com上正准备付款，突然QQ上弹出消息，说你中奖苹果电脑一台了，点击进去一看，何种输入验证码，准备收货。开心回到银行继续付款，却被提示余额不足，宅男摸摸头，难道我记错了……</p>
 </blockquote>
-<p>点评：<strong>不能怪咱们的用户，只能说骗子手法很隐蔽</strong> </p>
+<p>点评：<strong>不能怪咱们的用户，只能说骗子手法很隐蔽</strong></p>
 <p><em>咱们来看看上面过程中，骗子是怎么完成一次攻击的</em></p>
 <ul>
 <li><strong>技术分析</strong></li>
@@ -36,6 +36,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">token = MD5(UID*SALT)</span><br></pre></td></tr></table></figure>
 <p>服务端拿到token之后，用相同的算法对UID进行运算后得到服务端的token，与客户端的token进行比较，不相等即可以判断为非法。</p>
 <p>这个算法的实质在于利用了浏览器的同源策略，b.com下的cookie在a.com下是无法拿到的，因此黑客也就无法伪造出正确的token。加上MD5和SALT的主要目的是为了增加破解成本。</p>
+<hr>
+<h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><blockquote>
+<p>待续</p>
+</blockquote>
 ]]></content>
     </entry>
     
