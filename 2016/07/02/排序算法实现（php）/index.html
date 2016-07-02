@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="自古求真皆寂寞，唯挑心灯伴夜霭"><title>排序算法实现（php） | 岁月如歌</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/4.1.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">排序算法实现（php）</h1><a id="logo" href="/.">岁月如歌</a><p class="description">莫厌追欢笑语频，寻思离乱好伤神。闲来屈指从头数，得见清平有几人</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">排序算法实现（php）</h1><div class="post-meta">Jul 2, 2016<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-thread-key="2016/07/02/排序算法实现（php）/" href="/2016/07/02/排序算法实现（php）/#comments" class="ds-thread-count"></a><div class="post-content"><h2 id="排序算法分析和实现"><a href="#排序算法分析和实现" class="headerlink" title="排序算法分析和实现"></a>排序算法分析和实现</h2><p>在<a href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6" target="_blank" rel="external">计算机科学</a>所使用的排序算法通常被分类为：</p>
+<ul>
+<li>计算的<a href="https://zh.wikipedia.org/wiki/%E8%A8%88%E7%AE%97%E8%A4%87%E9%9B%9C%E6%80%A7%E7%90%86%E8%AB%96" target="_blank" rel="external">时间复杂度</a>（最差、平均、和最好性能），依据列表（list）的大小(<em>n</em>)。一般而言，好的性能是<a href="https://zh.wikipedia.org/wiki/%E5%A4%A7O%E7%AC%A6%E5%8F%B7" target="_blank" rel="external">O</a>(<em>n</em> log <em>n</em>)，且坏的性能是O(<em>n</em>2)。对于一个排序理想的性能是<a href="https://zh.wikipedia.org/wiki/%E5%A4%A7O%E7%AC%A6%E5%8F%B7" target="_blank" rel="external">O</a>(<em>n</em>)。仅使用一个抽象关键比较运算的排序算法总平均上总是至少需要O(<em>n</em> log <em>n</em>)。</li>
+<li>内存使用量（以及其他电脑资源的使用）</li>
+<li>稳定性：<strong>稳定排序算法</strong>会让原本有相等键值的纪录维持相对次序。也就是如果一个排序算法是<strong>稳定</strong>的，当有两个相等键值的纪录<em>R</em>和<em>S</em>，且在原本的列表中<em>R</em>出现在<em>S</em>之前，在排序过的列表中<em>R</em>也将会是在<em>S</em>之前。</li>
+<li>依据排序的方法：插入、交换、选择、合并等等。</li>
+</ul>
+<h2 id="排序算法列表"><a href="#排序算法列表" class="headerlink" title="排序算法列表"></a>排序算法列表</h2><h3 id="稳定的排序"><a href="#稳定的排序" class="headerlink" title="稳定的排序"></a>稳定的排序</h3><ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F" target="_blank" rel="external">冒泡排序</a>（bubble sort）— O(<em>n</em>2)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%B8%A1%E5%B0%BE%E9%85%92%E6%8E%92%E5%BA%8F" target="_blank" rel="external">鸡尾酒排序</a>（cocktail sort）—O(<em>n</em>2)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F" target="_blank" rel="external">插入排序</a>（insertion sort）—O(<em>n</em>2)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%A1%B6%E6%8E%92%E5%BA%8F" target="_blank" rel="external">桶排序</a>（bucket sort）—O(<em>n</em>)；需要O(<em>k</em>)额外空间</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F" target="_blank" rel="external">计数排序</a>（counting sort）—O(<em>n</em>+<em>k</em>)；需要O(<em>n</em>+<em>k</em>)额外空间</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F" target="_blank" rel="external">归并排序</a>（merge sort）—O(<em>n</em> log <em>n</em>)；需要O(<em>n</em>)额外空间</li>
+<li>原地<a href="https://zh.wikipedia.org/wiki/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F" target="_blank" rel="external">归并排序</a>— O(<em>n</em> log2 <em>n</em>)如果使用最佳的现在版本</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E4%BA%8C%E5%8F%89%E6%8E%92%E5%BA%8F%E6%A0%91" target="_blank" rel="external">二叉排序树</a>排序（binary tree sort）— O(<em>n</em> log <em>n</em>)期望时间；O(<em>n</em>2)最坏时间；需要O(<em>n</em>)额外空间</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%B8%BD%E5%B7%A2%E6%8E%92%E5%BA%8F" target="_blank" rel="external">鸽巢排序</a>（pigeonhole sort）—O(<em>n</em>+<em>k</em>)；需要O(<em>k</em>)额外空间</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F" target="_blank" rel="external">基数排序</a>（radix sort）—O(<em>n</em>·<em>k</em>)；需要O(<em>n</em>)额外空间</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=%E4%BE%8F%E5%84%92%E6%8E%92%E5%BA%8F&amp;action=edit&amp;redlink=1" target="_blank" rel="external">侏儒排序</a>（gnome sort）— O(<em>n</em>2)</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=%E5%9C%96%E6%9B%B8%E9%A4%A8%E6%8E%92%E5%BA%8F&amp;action=edit&amp;redlink=1" target="_blank" rel="external">图书馆排序</a>（library sort）— O(<em>n</em> log <em>n</em>)期望时间；O(<em>n</em>2)最坏时间；需要(1+ε)<em>n</em>额外空间</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=%E5%A1%8A%E6%8E%92%E5%BA%8F&amp;action=edit&amp;redlink=1" target="_blank" rel="external">块排序</a>（block sort）— O(<em>n</em> log <em>n</em>)</li>
+</ul>
+<h3 id="不稳定的排序"><a href="#不稳定的排序" class="headerlink" title="不稳定的排序"></a>不稳定的排序</h3><ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%81%B8%E6%93%87%E6%8E%92%E5%BA%8F" target="_blank" rel="external">选择排序</a>（selection sort）—O(<em>n</em>2)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F" target="_blank" rel="external">希尔排序</a>（shell sort）—O(<em>n</em> log2 <em>n</em>)如果使用最佳的现在版本</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=Clover%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95&amp;action=edit&amp;redlink=1" target="_blank" rel="external">Clover排序算法</a>（Clover sort）—O(n)期望时间，O(n2)最坏情况</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%A2%B3%E6%8E%92%E5%BA%8F" target="_blank" rel="external">梳排序</a>— O(<em>n</em> log <em>n</em>)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%A0%86%E6%8E%92%E5%BA%8F" target="_blank" rel="external">堆排序</a>（heap sort）—O(<em>n</em> log <em>n</em>)</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=%E5%B9%B3%E6%BB%91%E6%8E%92%E5%BA%8F&amp;action=edit&amp;redlink=1" target="_blank" rel="external">平滑排序</a>（smooth sort）— O(<em>n</em> log <em>n</em>)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F" target="_blank" rel="external">快速排序</a>（quick sort）—O(<em>n</em> log <em>n</em>)期望时间，O(<em>n</em>2)最坏情况；对于大的、随机数列表一般相信是最快的已知排序</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%86%85%E7%9C%81%E6%8E%92%E5%BA%8F" target="_blank" rel="external">内省排序</a>（introsort）—O(<em>n</em> log <em>n</em>)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E8%80%90%E5%BF%83%E6%8E%92%E5%BA%8F" target="_blank" rel="external">耐心排序</a>（patience sort）—O(<em>n</em> log <em>n</em> + <em>k</em>)最坏情况时间，需要额外的O(<em>n</em> + <em>k</em>)空间，也需要找到<a href="https://zh.wikipedia.org/w/index.php?title=%E6%9C%80%E9%95%B7%E7%9A%84%E9%81%9E%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97&amp;action=edit&amp;redlink=1" target="_blank" rel="external">最长的递增子序列</a>（longest increasing subsequence）</li>
+</ul>
+<h3 id="不实用的排序"><a href="#不实用的排序" class="headerlink" title="不实用的排序"></a>不实用的排序</h3><ul>
+<li><a href="https://zh.wikipedia.org/wiki/Bogo%E6%8E%92%E5%BA%8F" target="_blank" rel="external">Bogo排序</a>— O(<em>n</em> × <em>n</em>!)，最坏的情况下期望时间为无穷。</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=Stupid%E6%8E%92%E5%BA%8F&amp;action=edit&amp;redlink=1" target="_blank" rel="external">Stupid排序</a>—O(<em>n</em>3);递归版本需要O(<em>n</em>2)额外内存</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E7%8F%A0%E6%8E%92%E5%BA%8F" target="_blank" rel="external">珠排序</a>（bead sort）— O(<em>n</em>) or O(√<em>n</em>),但需要特别的硬件</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=%E7%85%8E%E9%A4%85%E6%8E%92%E5%BA%8F&amp;action=edit&amp;redlink=1" target="_blank" rel="external">煎饼排序</a>—O(<em>n</em>),但需要特别的硬件</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E8%87%AD%E7%9A%AE%E5%8C%A0%E6%8E%92%E5%BA%8F" target="_blank" rel="external">臭皮匠排序</a>（stooge sort）算法简单，但需要约n^2.7的时间</li>
+</ul>
+<hr>
+<h1 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h1><table>
+<thead>
+<tr>
+<th>数据结构</th>
+<th><a href="https://zh.wikipedia.org/wiki/%E6%95%B8%E7%B5%84" target="_blank" rel="external">数组</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最差时间复杂度</td>
+<td><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6cd9594a16cb898b8f2a2dff9227a385ec183392" alt="O(n^{2})"></td>
+</tr>
+<tr>
+<td>最优时间复杂度</td>
+<td><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/34109fe397fdcff370079185bfdb65826cb5565a" alt="O(n)"></td>
+</tr>
+<tr>
+<td>平均时间复杂度</td>
+<td><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6cd9594a16cb898b8f2a2dff9227a385ec183392" alt="O(n^{2})"></td>
+</tr>
+<tr>
+<td>最差空间复杂度</td>
+<td>总共<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/34109fe397fdcff370079185bfdb65826cb5565a" alt="O(n)">，需要辅助空间<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e66384bc40452c5452f33563fe0e27e803b0cc21" alt="O(1)"></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">swap</span><span class="params">(&amp;$x, &amp;$y)</span> </span>&#123;</span><br><span class="line">	$t = $x;</span><br><span class="line">	$x = $y;</span><br><span class="line">	$y = $t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubble_sort</span><span class="params">(&amp;$arr)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; count($arr) - <span class="number">1</span>; $i++)</span><br><span class="line">		<span class="keyword">for</span> ($j = <span class="number">0</span>; $j &lt; count($arr) - <span class="number">1</span> - $i; $j++)</span><br><span class="line">			<span class="keyword">if</span> ($arr[$j] &gt; $arr[$j + <span class="number">1</span>])</span><br><span class="line">				swap($arr[$j], $arr[$j + <span class="number">1</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$arr = <span class="keyword">array</span>(<span class="number">21</span>, <span class="number">34</span>, <span class="number">3</span>, <span class="number">32</span>, <span class="number">82</span>, <span class="number">55</span>, <span class="number">89</span>, <span class="number">50</span>, <span class="number">37</span>, <span class="number">5</span>, <span class="number">64</span>, <span class="number">35</span>, <span class="number">9</span>, <span class="number">70</span>);</span><br><span class="line">bubble_sort($arr);</span><br><span class="line"><span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; count($arr); $i++)</span><br><span class="line">	<span class="keyword">echo</span> $arr[$i] . <span class="string">' '</span>;</span><br></pre></td></tr></table></figure>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://hu820.github.io/2016/07/02/排序算法实现（php）/" data-id="ciq4smfy30000oribd483qixn" class="article-share-link">分享到</a><div class="tags"><a href="/tags/算法-效率/">算法 效率</a></div><div class="post-nav"><a href="/2016/06/13/CSRF-XSS-SQL注入/" class="next">CSRF/XSS/SQL注入</a></div><div data-thread-key="2016/07/02/排序算法实现（php）/" data-title="排序算法实现（php）" data-url="http://hu820.github.io/2016/07/02/排序算法实现（php）/" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2016/07/02/排序算法实现（php）/" data-title="排序算法实现（php）" data-url="http://hu820.github.io/2016/07/02/排序算法实现（php）/" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/WEB安全/" style="font-size: 15px;">WEB安全</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/算法-效率/" style="font-size: 15px;">算法 效率</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/07/02/排序算法实现（php）/">排序算法实现（php）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/CSRF-XSS-SQL注入/">CSRF/XSS/SQL注入</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/12/用markdown写作/">用markdown写作</a></li></ul></div><div class="widget"><div class="comments-title"><i class="fa fa-comment-o"> 最近评论</i></div><div data-num-items="5" data-show-avatars="0" data-show-time="1" data-show-admin="0" data-excerpt-length="32" data-show-title="1" class="ds-recent-comments"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://github.com/hu820" title="github" target="_blank">github</a><ul></ul><a href="http://weibo.com/hulinjun87" title="微博" target="_blank">微博</a><ul></ul><a href="https://www.zhihu.com/people/linjun-hu" title="知乎" target="_blank">知乎</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">岁月如歌.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>var duoshuoQuery = {short_name:'hu820'};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+   search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-79194181-1','auto');ga('send','pageview');
+</script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?ad1f7bc8aba51cfcf47ff24b76a106f4";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

@@ -4,6 +4,80 @@
   
     
     <entry>
+      <title><![CDATA[排序算法实现（php）]]></title>
+      <url>http://hu820.github.io/2016/07/02/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%EF%BC%88php%EF%BC%89/</url>
+      <content type="html"><![CDATA[<h2 id="排序算法分析和实现"><a href="#排序算法分析和实现" class="headerlink" title="排序算法分析和实现"></a>排序算法分析和实现</h2><p>在<a href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6" target="_blank" rel="external">计算机科学</a>所使用的排序算法通常被分类为：</p>
+<ul>
+<li>计算的<a href="https://zh.wikipedia.org/wiki/%E8%A8%88%E7%AE%97%E8%A4%87%E9%9B%9C%E6%80%A7%E7%90%86%E8%AB%96" target="_blank" rel="external">时间复杂度</a>（最差、平均、和最好性能），依据列表（list）的大小(<em>n</em>)。一般而言，好的性能是<a href="https://zh.wikipedia.org/wiki/%E5%A4%A7O%E7%AC%A6%E5%8F%B7" target="_blank" rel="external">O</a>(<em>n</em> log <em>n</em>)，且坏的性能是O(<em>n</em>2)。对于一个排序理想的性能是<a href="https://zh.wikipedia.org/wiki/%E5%A4%A7O%E7%AC%A6%E5%8F%B7" target="_blank" rel="external">O</a>(<em>n</em>)。仅使用一个抽象关键比较运算的排序算法总平均上总是至少需要O(<em>n</em> log <em>n</em>)。</li>
+<li>内存使用量（以及其他电脑资源的使用）</li>
+<li>稳定性：<strong>稳定排序算法</strong>会让原本有相等键值的纪录维持相对次序。也就是如果一个排序算法是<strong>稳定</strong>的，当有两个相等键值的纪录<em>R</em>和<em>S</em>，且在原本的列表中<em>R</em>出现在<em>S</em>之前，在排序过的列表中<em>R</em>也将会是在<em>S</em>之前。</li>
+<li>依据排序的方法：插入、交换、选择、合并等等。</li>
+</ul>
+<h2 id="排序算法列表"><a href="#排序算法列表" class="headerlink" title="排序算法列表"></a>排序算法列表</h2><h3 id="稳定的排序"><a href="#稳定的排序" class="headerlink" title="稳定的排序"></a>稳定的排序</h3><ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F" target="_blank" rel="external">冒泡排序</a>（bubble sort）— O(<em>n</em>2)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%B8%A1%E5%B0%BE%E9%85%92%E6%8E%92%E5%BA%8F" target="_blank" rel="external">鸡尾酒排序</a>（cocktail sort）—O(<em>n</em>2)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F" target="_blank" rel="external">插入排序</a>（insertion sort）—O(<em>n</em>2)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%A1%B6%E6%8E%92%E5%BA%8F" target="_blank" rel="external">桶排序</a>（bucket sort）—O(<em>n</em>)；需要O(<em>k</em>)额外空间</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F" target="_blank" rel="external">计数排序</a>（counting sort）—O(<em>n</em>+<em>k</em>)；需要O(<em>n</em>+<em>k</em>)额外空间</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F" target="_blank" rel="external">归并排序</a>（merge sort）—O(<em>n</em> log <em>n</em>)；需要O(<em>n</em>)额外空间</li>
+<li>原地<a href="https://zh.wikipedia.org/wiki/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F" target="_blank" rel="external">归并排序</a>— O(<em>n</em> log2 <em>n</em>)如果使用最佳的现在版本</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E4%BA%8C%E5%8F%89%E6%8E%92%E5%BA%8F%E6%A0%91" target="_blank" rel="external">二叉排序树</a>排序（binary tree sort）— O(<em>n</em> log <em>n</em>)期望时间；O(<em>n</em>2)最坏时间；需要O(<em>n</em>)额外空间</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%B8%BD%E5%B7%A2%E6%8E%92%E5%BA%8F" target="_blank" rel="external">鸽巢排序</a>（pigeonhole sort）—O(<em>n</em>+<em>k</em>)；需要O(<em>k</em>)额外空间</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F" target="_blank" rel="external">基数排序</a>（radix sort）—O(<em>n</em>·<em>k</em>)；需要O(<em>n</em>)额外空间</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=%E4%BE%8F%E5%84%92%E6%8E%92%E5%BA%8F&amp;action=edit&amp;redlink=1" target="_blank" rel="external">侏儒排序</a>（gnome sort）— O(<em>n</em>2)</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=%E5%9C%96%E6%9B%B8%E9%A4%A8%E6%8E%92%E5%BA%8F&amp;action=edit&amp;redlink=1" target="_blank" rel="external">图书馆排序</a>（library sort）— O(<em>n</em> log <em>n</em>)期望时间；O(<em>n</em>2)最坏时间；需要(1+ε)<em>n</em>额外空间</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=%E5%A1%8A%E6%8E%92%E5%BA%8F&amp;action=edit&amp;redlink=1" target="_blank" rel="external">块排序</a>（block sort）— O(<em>n</em> log <em>n</em>)</li>
+</ul>
+<h3 id="不稳定的排序"><a href="#不稳定的排序" class="headerlink" title="不稳定的排序"></a>不稳定的排序</h3><ul>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%81%B8%E6%93%87%E6%8E%92%E5%BA%8F" target="_blank" rel="external">选择排序</a>（selection sort）—O(<em>n</em>2)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F" target="_blank" rel="external">希尔排序</a>（shell sort）—O(<em>n</em> log2 <em>n</em>)如果使用最佳的现在版本</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=Clover%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95&amp;action=edit&amp;redlink=1" target="_blank" rel="external">Clover排序算法</a>（Clover sort）—O(n)期望时间，O(n2)最坏情况</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E6%A2%B3%E6%8E%92%E5%BA%8F" target="_blank" rel="external">梳排序</a>— O(<em>n</em> log <em>n</em>)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%A0%86%E6%8E%92%E5%BA%8F" target="_blank" rel="external">堆排序</a>（heap sort）—O(<em>n</em> log <em>n</em>)</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=%E5%B9%B3%E6%BB%91%E6%8E%92%E5%BA%8F&amp;action=edit&amp;redlink=1" target="_blank" rel="external">平滑排序</a>（smooth sort）— O(<em>n</em> log <em>n</em>)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F" target="_blank" rel="external">快速排序</a>（quick sort）—O(<em>n</em> log <em>n</em>)期望时间，O(<em>n</em>2)最坏情况；对于大的、随机数列表一般相信是最快的已知排序</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%86%85%E7%9C%81%E6%8E%92%E5%BA%8F" target="_blank" rel="external">内省排序</a>（introsort）—O(<em>n</em> log <em>n</em>)</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E8%80%90%E5%BF%83%E6%8E%92%E5%BA%8F" target="_blank" rel="external">耐心排序</a>（patience sort）—O(<em>n</em> log <em>n</em> + <em>k</em>)最坏情况时间，需要额外的O(<em>n</em> + <em>k</em>)空间，也需要找到<a href="https://zh.wikipedia.org/w/index.php?title=%E6%9C%80%E9%95%B7%E7%9A%84%E9%81%9E%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97&amp;action=edit&amp;redlink=1" target="_blank" rel="external">最长的递增子序列</a>（longest increasing subsequence）</li>
+</ul>
+<h3 id="不实用的排序"><a href="#不实用的排序" class="headerlink" title="不实用的排序"></a>不实用的排序</h3><ul>
+<li><a href="https://zh.wikipedia.org/wiki/Bogo%E6%8E%92%E5%BA%8F" target="_blank" rel="external">Bogo排序</a>— O(<em>n</em> × <em>n</em>!)，最坏的情况下期望时间为无穷。</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=Stupid%E6%8E%92%E5%BA%8F&amp;action=edit&amp;redlink=1" target="_blank" rel="external">Stupid排序</a>—O(<em>n</em>3);递归版本需要O(<em>n</em>2)额外内存</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E7%8F%A0%E6%8E%92%E5%BA%8F" target="_blank" rel="external">珠排序</a>（bead sort）— O(<em>n</em>) or O(√<em>n</em>),但需要特别的硬件</li>
+<li><a href="https://zh.wikipedia.org/w/index.php?title=%E7%85%8E%E9%A4%85%E6%8E%92%E5%BA%8F&amp;action=edit&amp;redlink=1" target="_blank" rel="external">煎饼排序</a>—O(<em>n</em>),但需要特别的硬件</li>
+<li><a href="https://zh.wikipedia.org/wiki/%E8%87%AD%E7%9A%AE%E5%8C%A0%E6%8E%92%E5%BA%8F" target="_blank" rel="external">臭皮匠排序</a>（stooge sort）算法简单，但需要约n^2.7的时间</li>
+</ul>
+<hr>
+<h1 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h1><table>
+<thead>
+<tr>
+<th>数据结构</th>
+<th><a href="https://zh.wikipedia.org/wiki/%E6%95%B8%E7%B5%84" target="_blank" rel="external">数组</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最差时间复杂度</td>
+<td><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6cd9594a16cb898b8f2a2dff9227a385ec183392" alt="O(n^{2})"></td>
+</tr>
+<tr>
+<td>最优时间复杂度</td>
+<td><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/34109fe397fdcff370079185bfdb65826cb5565a" alt="O(n)"></td>
+</tr>
+<tr>
+<td>平均时间复杂度</td>
+<td><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6cd9594a16cb898b8f2a2dff9227a385ec183392" alt="O(n^{2})"></td>
+</tr>
+<tr>
+<td>最差空间复杂度</td>
+<td>总共<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/34109fe397fdcff370079185bfdb65826cb5565a" alt="O(n)">，需要辅助空间<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/e66384bc40452c5452f33563fe0e27e803b0cc21" alt="O(1)"></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">swap</span><span class="params">(&amp;$x, &amp;$y)</span> </span>&#123;</span><br><span class="line">	$t = $x;</span><br><span class="line">	$x = $y;</span><br><span class="line">	$y = $t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubble_sort</span><span class="params">(&amp;$arr)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; count($arr) - <span class="number">1</span>; $i++)</span><br><span class="line">		<span class="keyword">for</span> ($j = <span class="number">0</span>; $j &lt; count($arr) - <span class="number">1</span> - $i; $j++)</span><br><span class="line">			<span class="keyword">if</span> ($arr[$j] &gt; $arr[$j + <span class="number">1</span>])</span><br><span class="line">				swap($arr[$j], $arr[$j + <span class="number">1</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$arr = <span class="keyword">array</span>(<span class="number">21</span>, <span class="number">34</span>, <span class="number">3</span>, <span class="number">32</span>, <span class="number">82</span>, <span class="number">55</span>, <span class="number">89</span>, <span class="number">50</span>, <span class="number">37</span>, <span class="number">5</span>, <span class="number">64</span>, <span class="number">35</span>, <span class="number">9</span>, <span class="number">70</span>);</span><br><span class="line">bubble_sort($arr);</span><br><span class="line"><span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; count($arr); $i++)</span><br><span class="line">	<span class="keyword">echo</span> $arr[$i] . <span class="string">' '</span>;</span><br></pre></td></tr></table></figure>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[CSRF/XSS/SQL注入]]></title>
       <url>http://hu820.github.io/2016/06/13/CSRF-XSS-SQL%E6%B3%A8%E5%85%A5/</url>
       <content type="html"><![CDATA[<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><blockquote>
